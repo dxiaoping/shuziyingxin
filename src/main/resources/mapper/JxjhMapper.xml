@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.shuziyingxin.dao.JxjhDao">
+    <!--<resultMap id="jxjh" type="com.ccsu.shuziyingxin.pojo.Jxjh">-->
+
+    <!--</resultMap>-->
+    <select id="queryAllJxjh" resultType="com.ccsu.shuziyingxin.pojo.Jxjh">
+		select * from jxjh where speciality_name=#{speciality};
+	</select>
+    <select id="getMajorClass" resultType="com.ccsu.shuziyingxin.pojo.Jxjh">
+		select * from jxjh
+		where speciality_name=#{speciality}
+		and (course_nature='专业基础课' or course_nature='专业课')
+		and course_attr='必修';
+	</select>
+    <select id="queryJxjhBySpeciality" resultType="com.ccsu.shuziyingxin.pojo.Jxjh">
+       select * from jxjh where speciality_name = #{speciality} limit 0,1;
+    </select>
+    <insert id="saveJxjh" parameterType="java.util.List"
+            useGeneratedKeys="true">
+        <!-- 批量插入数据 -->
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT
+            LAST_INSERT_ID()
+        </selectKey>
+        insert into jxjh
+        (start_year,
+        speciality_name,
+        speciality_direction,
+        start_term,
+        course_no,
+        course_name,
+        course_nature,
+        course_attr,
+        check_mode,
+        credit,
+        time_class,
+        time_week,
+        time_class_theory,
+        time_class_practice,
+        time_class_lecture,
+        unit,
+        course_class)
+        values
+        <foreach collection="list" item="jxjh" index="index"
+                 separator=",">
+            (
+            #{jxjh.startYear},
+            #{jxjh.specialityName},
+            #{jxjh.specialityDirection},
+            #{jxjh.startTerm},
+            #{jxjh.courseNo},
+            #{jxjh.courseName},
+            #{jxjh.courseNature},
+            #{jxjh.courseAttr},
+            #{jxjh.checkMode},
+            #{jxjh.credit},
+            #{jxjh.timeClass},
+            #{jxjh.time_week},
+            #{jxjh.timeClassTheory},
+            #{jxjh.timeClassPractice},
+            #{jxjh.timeClassLecture},
+            #{jxjh.unit},
+            #{jxjh.courseClass}
+            )
+        </foreach>
+    </insert>
+</mapper>

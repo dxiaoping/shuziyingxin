@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.shuziyingxin.dao.BusiDao">
+    <insert id="createBusi" useGeneratedKeys="true" keyProperty="busiId" parameterType="com.ccsu.shuziyingxin.pojo.Business" >
+        insert into business(busi_name,busi_class_id,solution)
+        values (#{busiName},#{busiClassId},#{solution})
+    </insert>
+    <delete id="deleteBusi" parameterType="int">
+        delete from business where busi_id=#{busiId}
+    </delete>
+    <update id="modifyBusi" parameterType="com.ccsu.shuziyingxin.pojo.Business">
+        update business
+        <set>
+            <if test="busiName != null">busi_name=#{busiName},</if>
+            <if test="busiClassId != 0">busi_class_id=#{busiClassId},</if>
+            <if test="solution != null">solution=#{solution},</if>
+        </set>
+        where busi_id = #{busiId}
+    </update>
+    <select id="queryBusi" resultType="com.ccsu.shuziyingxin.pojo.Business">
+        select * from business where busi_id = #{busiId}
+    </select>
+    <select id="queryBusiByName" resultType="com.ccsu.shuziyingxin.pojo.Business">
+        select * from business where busi_name = #{busiName}
+    </select>
+    <select id="queryBusiRela" resultType="com.ccsu.shuziyingxin.pojo.Business">
+
+         select bu.* from business bu
+         right join (
+         select (case when busi_id1 = #{busiId} then busi_id2 else busi_id1 end) as a
+         from busi_relation where busi_id1 = #{busiId} or busi_id2 = #{busiId}) bure
+         on (bu.busi_id=bure.a)
+    </select>
+    <insert id="addRelation">
+        insert into busi_relation
+        values (#{busiId1},#{busiId2})
+    </insert>
+    <delete id="deleteRelation">
+        delete from busi_relation
+        where (busi_id1=#{busiId1} and busi_id2=#{busiId2})
+        or (busi_id1=#{busiId2} and busi_id2=#{busiId1})
+    </delete>
+    <delete id="deleteBusiRelation">
+        delete from busi_relation
+        where busi_id1=#{busiId} or busi_id2=#{busiId}
+    </delete>
+    <select id="queryBusiByClass" resultType="com.ccsu.shuziyingxin.pojo.Business">
+        select * from business where busi_class_id = #{classId}
+    </select>
+    <select id="queryAllBusi" resultType="com.ccsu.shuziyingxin.pojo.Business">
+        select * from business;
+    </select>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.shuziyingxin.dao.AddrDao">
+    <insert id="createAddr" useGeneratedKeys="true" keyProperty="addrId"
+            parameterType="com.ccsu.shuziyingxin.pojo.Address">
+        insert into address(addr_name,latitude,longitude,description)
+        values (#{addrName},#{latitude},#{longitude},#{description})
+    </insert>
+    <delete id="deleteAddr" parameterType="int">
+        delete from address where addr_id=#{addrId}
+    </delete>
+    <update id="modifyAddr" parameterType="com.ccsu.shuziyingxin.pojo.Address">
+        update address set description = #{description},
+        addr_name=#{addrName},
+        latitude=#{latitude},longitude=#{longitude}
+        where addr_id = #{addrId}
+    </update>
+    <select id="queryAddr" resultType="com.ccsu.shuziyingxin.pojo.Address">
+      select * from address where addr_id = #{addrId}
+    </select>
+    <select id="queryAddrListByBusi" parameterType="int" resultType="com.ccsu.shuziyingxin.pojo.Address">
+        select * from address addr
+        left join addr_relation ar on addr.addr_id= ar.addr_id
+        where ar.busi_id = #{busiId}
+    </select>
+
+    <select id="queryAllAddr" resultType="com.ccsu.shuziyingxin.pojo.Address">
+        select * from address addr
+    </select>
+    <insert id="addRelation">
+        insert into addr_relation(busi_id,addr_id)
+        values (#{busiId},#{addrId})
+    </insert>
+    <delete id="deleteRelation">
+        delete from addr_relation
+        where busi_id = #{busiId}
+    </delete>
+</mapper>

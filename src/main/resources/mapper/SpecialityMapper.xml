@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.shuziyingxin.dao.SpecialityDao">
+
+    <insert id="createSpeciality" useGeneratedKeys="true" keyProperty="specialityId"
+            parameterType="com.ccsu.shuziyingxin.pojo.Speciality">
+        insert into speciality(college_id,speciality_name,description,major_class)
+        values (#{collegeId},#{specialityName},#{description},#{majorClass})
+    </insert>
+    <delete id="deleteSpeciality" parameterType="int">
+        delete from Speciality where college_id=#{collegeId}
+    </delete>
+    <update id="modifySpeciality" parameterType="com.ccsu.shuziyingxin.pojo.Speciality">
+        update speciality set description=#{description}
+        where speciality_id = #{specialityId}
+    </update>
+    <select id="querySpeciality" resultType="com.ccsu.shuziyingxin.pojo.Speciality">
+      select * from speciality where speciality_id =#{specialityId}
+    </select>
+    <select id="querySpecialityByName" resultType="com.ccsu.shuziyingxin.pojo.Speciality">
+        select * from speciality where speciality_name =#{specialityName}
+    </select>
+    <select id="querySpeciByCollege" resultType="com.ccsu.shuziyingxin.pojo.Speciality">
+        select * from speciality where college_id = #{collegeId}
+    </select>
+    <select id="querySpecialityList" resultType="com.ccsu.shuziyingxin.pojo.Speciality">
+        select * from speciality;
+    </select>
+</mapper>

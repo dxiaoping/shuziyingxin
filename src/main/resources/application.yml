@@ -1,0 +1,34 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.101.72.84:3306/yingxin?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    #    url: jdbc:mysql://127.0.0.1:3306/job_collection?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    username: root
+    #    password: dxp971216
+    password: 123456
+server:
+  servlet:
+    context-path: /
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true  # 开启驼峰命名
+  type-aliases-package: com.ccsu.shuziyingxin.dao
+
+---
+spring:
+  profiles: dev
+server:
+  port: 1437
+---
+spring:
+  profiles: online
+server:
+  port: 443
+  ssl:
+    key-store: classpath:job.jks
+    key-store-password: Jx73ifqW
+    key-store-type: jks
+
