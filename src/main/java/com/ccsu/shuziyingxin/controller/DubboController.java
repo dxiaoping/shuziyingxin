@@ -1,7 +1,9 @@
 package com.ccsu.shuziyingxin.controller;
 
 //import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.ccsu.shuziyingxin.dubbo.ICodeService;
+import com.ccsu.shuziyingxin.service.TestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("dubbo")
 public class DubboController {
 
-//    @Reference(url = "dubbo://127.0.0.1:8888")
-//    ICodeService codeService;
+    @Reference
+    TestService testService;
 
     @RequestMapping("test")
     public void dubboTest() {
-//        codeService.getCode();
-        System.out.println("dubbo");
+        System.out.println(99999999);
+        System.out.println(testService.add(5,9));
     }
 }

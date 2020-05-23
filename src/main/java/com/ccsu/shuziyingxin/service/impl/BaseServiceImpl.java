@@ -1,7 +1,9 @@
 package com.ccsu.shuziyingxin.service.impl;
 
+import com.ccsu.shuziyingxin.dao.ConfigDao;
 import com.ccsu.shuziyingxin.dao.JxjhDao;
 import com.ccsu.shuziyingxin.dao.SearchDao;
+import com.ccsu.shuziyingxin.pojo.Config;
 import com.ccsu.shuziyingxin.pojo.Jxjh;
 import com.ccsu.shuziyingxin.pojo.Search;
 import com.ccsu.shuziyingxin.pojo.Student;
@@ -27,6 +29,10 @@ public class BaseServiceImpl implements IBaseService {
 
     @Autowired
     SearchDao searchDao;
+
+    @Autowired
+    ConfigDao configDao;
+
     @Override
     public List<Jxjh> getJxjh(String speciality) {
         return jxjhDao.queryAllJxjh(speciality);
@@ -37,5 +43,11 @@ public class BaseServiceImpl implements IBaseService {
 
         List<Search> searchList = searchDao.queryAll();
         return searchList;
+    }
+
+    @Override
+    public List<Config> getConfigList(String class1) {
+        List<Config> configs = configDao.selectListByClass(class1);
+        return configs;
     }
 }

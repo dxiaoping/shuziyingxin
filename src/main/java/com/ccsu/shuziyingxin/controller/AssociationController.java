@@ -36,7 +36,6 @@ public class AssociationController {
         return ResultInfo.success(ResultMsg.SUCCESS,association);
     }
 
-
     @RequestMapping(value = "queryOne", method = RequestMethod.GET)
     @ResponseBody
     public ResultInfo queryOne(@RequestParam("id") Integer id) {
@@ -44,10 +43,10 @@ public class AssociationController {
         return ResultInfo.success(ResultMsg.SUCCESS, association);
     }
 
-    @RequestMapping(value = "queryAll", method = RequestMethod.GET, consumes = "application/json")
+    @RequestMapping(value = "queryByOrganization", method = RequestMethod.GET, consumes = "application/json")
     @ResponseBody
-    public ResultInfo queryAll() {
-        List<Association> associationList = associationService.queryAll();
+    public ResultInfo queryByOrganization(@RequestParam(value = "organization",required = false) String organization) {
+        List<Association> associationList = associationService.queryAll(organization);
         return ResultInfo.success(ResultMsg.SUCCESS, associationList);
     }
 }

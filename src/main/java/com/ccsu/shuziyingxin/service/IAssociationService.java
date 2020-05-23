@@ -13,5 +13,5 @@ public interface IAssociationService {
     boolean add(Association association);
     boolean modify(Association association);
     Association queryOne(int associationId);
-    List<Association> queryAll();
+    List<Association> queryAll(String organization);
 }

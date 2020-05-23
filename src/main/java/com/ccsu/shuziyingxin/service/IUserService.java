@@ -10,4 +10,5 @@ import com.ccsu.shuziyingxin.pojo.request.LoginParam;
  */
 public interface IUserService {
     ResultInfo login(LoginParam loginParam) throws Exception;
+    ResultInfo check(String secret);
 }

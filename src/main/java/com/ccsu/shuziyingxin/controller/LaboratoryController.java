@@ -7,10 +7,7 @@ import com.ccsu.shuziyingxin.pojo.request.LaboratoryParam;
 import com.ccsu.shuziyingxin.service.ILaboratoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,10 +23,10 @@ public class LaboratoryController {
     @Autowired
     ILaboratoryService laboratoryService;
 
-    @RequestMapping(value = "queryAll",method = RequestMethod.GET)
+    @RequestMapping(value = "queryByOrganization",method = RequestMethod.GET)
     @ResponseBody
-    public ResultInfo queryAll() {
-        List<Laboratory> laboratoryList = laboratoryService.queryAll();
+    public ResultInfo queryByOrganization(@RequestParam(value = "organization",required = false) String organization) {
+        List<Laboratory> laboratoryList = laboratoryService.queryAll(organization);
         return ResultInfo.success(ResultMsg.SUCCESS,laboratoryList);
     }
 

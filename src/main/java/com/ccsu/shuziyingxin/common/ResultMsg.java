@@ -12,7 +12,10 @@ public enum ResultMsg {
 
     LOGIN_PSD_ERR(10010,"账号或密码错误"),
     LOGIN_FAIL(10011,"登陆失败"),
-    LOGIN_SUCCESS(10012,"登陆成功");
+    LOGIN_SUCCESS(10012,"登陆成功"),
+    CHECK_SUCCESS(10020,"管理员验证失败"),
+    CHECK_FAIL(10021,"管理员验证失败");
+
     private int code;
     private String msg;
 

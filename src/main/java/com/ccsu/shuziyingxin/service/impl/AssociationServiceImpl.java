@@ -6,6 +6,7 @@ import com.ccsu.shuziyingxin.service.IAssociationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,8 +39,13 @@ public class AssociationServiceImpl implements IAssociationService {
     }
 
     @Override
-    public List<Association> queryAll() {
-        List<Association> associationList = associationDao.queryAll();
+    public List<Association> queryAll(String organization) {
+        List<Association> associationList = new ArrayList<>();
+        if (organization == null || "".equals(organization) || organization.equals("全部")) {
+            associationList = associationDao.queryAll();
+        }else {
+            associationList = associationDao.queryByOrganization(organization);
+        }
         return associationList;
     }
 }

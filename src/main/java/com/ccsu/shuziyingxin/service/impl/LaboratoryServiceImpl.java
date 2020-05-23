@@ -7,6 +7,7 @@ import com.ccsu.shuziyingxin.service.ILaboratoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,8 +22,14 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
     LaboratoryDao laboratoryDao;
 
     @Override
-    public List<Laboratory> queryAll() {
-        List<Laboratory> laboratoryList = laboratoryDao.queryAll();
+    public List<Laboratory> queryAll(String organization) {
+        List<Laboratory> laboratoryList = new ArrayList<>();
+        if (organization == null || "".equals(organization) || organization.equals("全部")) {
+            laboratoryList = laboratoryDao.queryAll();
+        }else {
+            laboratoryList = laboratoryDao.queryByOrganization(organization);
+
+        }
         return laboratoryList;
     }
 
@@ -38,7 +45,7 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
         Laboratory laboratory = laboratoryParam.getLaboratory();
         if ("modify".equals(type)) {
             laboratoryDao.update(laboratory);
-        }else {
+        } else {
             laboratoryDao.insert(laboratory);
         }
         return laboratory;

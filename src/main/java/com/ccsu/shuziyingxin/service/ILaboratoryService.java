@@ -11,7 +11,7 @@ import java.util.List;
  * @create 2020-04-25 21:25
  */
 public interface ILaboratoryService {
-    List<Laboratory> queryAll();
+    List<Laboratory> queryAll(String organization);
     Laboratory queryOne(int id);
     Laboratory saveLaboratory(LaboratoryParam laboratoryParam);
 }

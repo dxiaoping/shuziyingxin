@@ -3,9 +3,11 @@ package com.ccsu.shuziyingxin.service.impl;
 import com.ccsu.shuziyingxin.common.Const;
 import com.ccsu.shuziyingxin.common.ResultInfo;
 import com.ccsu.shuziyingxin.common.ResultMsg;
+import com.ccsu.shuziyingxin.dao.ConfigDao;
 import com.ccsu.shuziyingxin.dao.JxjhDao;
 import com.ccsu.shuziyingxin.dao.SpecialityDao;
 import com.ccsu.shuziyingxin.dao.StudentDao;
+import com.ccsu.shuziyingxin.pojo.Config;
 import com.ccsu.shuziyingxin.pojo.Jxjh;
 import com.ccsu.shuziyingxin.pojo.Speciality;
 import com.ccsu.shuziyingxin.pojo.Student;
@@ -48,17 +50,24 @@ public class UserServiceImpl implements IUserService {
     ISpecialityService specialityService;
 
     @Autowired
+    ConfigDao configDao;
+
+    @Autowired
     ExecutorService pool;
+
     @Override
     @Transactional
     public ResultInfo login(LoginParam loginParam) throws Exception {
         Student student = studentDao.queryByStuNo(loginParam.getAccount());
         if (student == null) {
 //            从信息门户爬取到信息封装到student
-//            student = new Student("B20160304302", "261216", "段晓平", "计算机工程与应用数学学院",
-//                    "软件工程", "16数管01", "洪山一栋|1143寝室");
-            student = new Student("B20170904112", "181420", "孙金", "经济与管理学院",
-                    "市场营销", "17市营01", "维智公寓|143寝室");
+            if (loginParam.getAccount().equals("B20160304302")) {
+                student = new Student("B20160304302", "261216", "段晓平", "计算机工程与应用数学学院",
+                        "软件工程", "16数管01", "洪山一栋|1143寝室");
+            } else {
+                student = new Student("B20170904112", "181420", "孙金", "经济与管理学院",
+                        "市场营销", "17市营01", "维智公寓|143寝室");
+            }
         }
         ReptileJxjh reptile = new ReptileJxjh();
         Map<String, String> map = login2jwc(loginParam.getAccount(), loginParam.getPassword());
@@ -86,7 +95,7 @@ public class UserServiceImpl implements IUserService {
                 });
             }
 //            specialityService.createSpeciality(student);
-            return ResultInfo.success(ResultMsg.LOGIN_SUCCESS,student);
+            return ResultInfo.success(ResultMsg.LOGIN_SUCCESS, student);
         } else if (Const.LOGIN_STATE.PSD_ERR.equals(state)) {
             System.out.println("账户或密码错误");
             return ResultInfo.success(ResultMsg.LOGIN_PSD_ERR);
@@ -94,6 +103,15 @@ public class UserServiceImpl implements IUserService {
             System.out.println("登陆失败");
             return ResultInfo.success(ResultMsg.LOGIN_FAIL);
         }
+    }
+
+    @Override
+    public ResultInfo check(String secret) {
+        Config config = configDao.select("admin_key",secret);
+        if (config ==null){
+            return ResultInfo.success(ResultMsg.CHECK_FAIL);
+        }
+        return ResultInfo.success(ResultMsg.CHECK_SUCCESS,config);
     }
 
     public static Map<String, String> login2jwc(String username, String password) throws Exception {

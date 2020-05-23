@@ -14,6 +14,7 @@ import java.util.List;
 public interface AssociationDao {
     Association queryOne(int id);
     List<Association> queryAll();
+    List<Association> queryByOrganization(String organization);
     int insertOne(Association association);
     int update(Association association);
 }

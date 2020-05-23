@@ -1,5 +1,6 @@
 package com.ccsu.shuziyingxin;
 
+import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication(scanBasePackages = {"com.ccsu.shuziyingxin.*"})
 @MapperScan("com.ccsu.shuziyingxin.dao")
+@EnableDubbo
 public class ShuziyingxinApplication {
 
     public static void main(String[] args) {

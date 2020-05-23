@@ -8,9 +8,18 @@ package com.ccsu.shuziyingxin.pojo;
 public class Association {
     private String id; //'社团id'
     private String name; //'社团名称'
+    private String organization;
     private String relatedPerson; //'相关人物'
     private String contactInfo; //'联系信息'
     private String description; //'社团描述'
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
 
     public String getId() {
         return id;

@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public interface LaboratoryDao {
     List<Laboratory> queryAll();
+    List<Laboratory> queryByOrganization(String organization);
     Laboratory queryOne(int id);
     int update(Laboratory laboratory);
     int insert(Laboratory laboratory);
