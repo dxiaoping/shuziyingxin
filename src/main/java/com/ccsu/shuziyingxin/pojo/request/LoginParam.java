@@ -8,6 +8,16 @@ package com.ccsu.shuziyingxin.pojo.request;
 public class LoginParam {
     String account;
     String password;
+//因信息门户服务器宕机手动模拟确定专业
+//    String speciality;
+
+//    public String getSpeciality() {
+//        return speciality;
+//    }
+//
+//    public void setSpeciality(String speciality) {
+//        this.speciality = speciality;
+//    }
 
     public String getAccount() {
         return account;

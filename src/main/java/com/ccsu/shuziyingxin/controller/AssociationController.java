@@ -46,7 +46,19 @@ public class AssociationController {
     @RequestMapping(value = "queryByOrganization", method = RequestMethod.GET, consumes = "application/json")
     @ResponseBody
     public ResultInfo queryByOrganization(@RequestParam(value = "organization",required = false) String organization) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         List<Association> associationList = associationService.queryAll(organization);
         return ResultInfo.success(ResultMsg.SUCCESS, associationList);
+    }
+
+    @RequestMapping(value = "delete", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultInfo deleteAsso(@RequestParam("assoId") int addrId) {
+        associationService.delete(addrId);
+        return ResultInfo.success(ResultMsg.SUCCESS);
     }
 }

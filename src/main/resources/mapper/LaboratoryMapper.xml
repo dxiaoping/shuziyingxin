@@ -38,4 +38,7 @@
         value (#{name},#{organization},#{relatedPerson},
         #{contactInfo},#{description},#{address})
     </insert>
+    <delete id="delete" parameterType="int">
+        delete from laboratory where id=#{id}
+    </delete>
 </mapper>

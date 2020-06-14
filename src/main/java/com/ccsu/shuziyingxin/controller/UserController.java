@@ -19,7 +19,6 @@ public class UserController {
     @Autowired
     IUserService userService;
 
-
     @RequestMapping(value = "login",method = RequestMethod.POST)
     @ResponseBody
     public ResultInfo login(@RequestBody LoginParam loginParam) throws Exception {

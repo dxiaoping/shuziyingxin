@@ -6,4 +6,22 @@
     <select id="queryByStuNo" resultType="com.ccsu.shuziyingxin.pojo.Student">
         select * from student where student_no=#{stuNo}
     </select>
+    <insert id="insert" parameterType="com.ccsu.shuziyingxin.pojo.Student">
+        insert into student(student_no,password,student_name,
+        college,speciality,class1,dormitory)
+        value (#{studentNo},#{password},#{studentName},
+        #{college},#{speciality},#{class1},#{dormitory})
+    </insert>
+    <update id="update" parameterType="com.ccsu.shuziyingxin.pojo.Student">
+        update student
+        <set>
+            <if test="password != null">password=#{password},</if>
+            <if test="studentName != null">student_name=#{studentName},</if>
+            <if test="college != null">college=#{college},</if>
+            <if test="speciality != null">speciality=#{speciality},</if>
+            <if test="class1 != null">class1=#{class1},</if>
+            <if test="dormitory != null">dormitory=#{dormitory},</if>
+        </set>
+        where student_no = #{studentNo}
+    </update>
 </mapper>

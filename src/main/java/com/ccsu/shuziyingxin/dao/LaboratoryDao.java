@@ -17,5 +17,6 @@ public interface LaboratoryDao {
     Laboratory queryOne(int id);
     int update(Laboratory laboratory);
     int insert(Laboratory laboratory);
+    boolean delete(int id);
 
 }

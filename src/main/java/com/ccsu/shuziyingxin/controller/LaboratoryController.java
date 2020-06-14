@@ -40,9 +40,14 @@ public class LaboratoryController {
     @RequestMapping(value = "save",method = RequestMethod.POST,consumes = "application/json")
     @ResponseBody
     public ResultInfo save(@RequestBody LaboratoryParam laboratoryParam) {
-
         Laboratory laboratory = laboratoryService.saveLaboratory(laboratoryParam);
         return ResultInfo.success(ResultMsg.SUCCESS,laboratory);
     }
 
+    @RequestMapping(value = "delete")
+    @ResponseBody
+    public ResultInfo delete(@RequestParam("id") int id) {
+        laboratoryService.delete(id);
+        return ResultInfo.success(ResultMsg.SUCCESS);
+    }
 }

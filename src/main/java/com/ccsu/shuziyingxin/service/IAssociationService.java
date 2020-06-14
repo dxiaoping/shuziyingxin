@@ -12,6 +12,7 @@ import java.util.List;
 public interface IAssociationService {
     boolean add(Association association);
     boolean modify(Association association);
+    boolean delete(int assoId);
     Association queryOne(int associationId);
     List<Association> queryAll(String organization);
 }

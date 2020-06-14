@@ -1,6 +1,7 @@
 package com.ccsu.shuziyingxin.service.impl;
 
 import com.ccsu.shuziyingxin.dao.AssociationDao;
+import com.ccsu.shuziyingxin.dao.SearchDao;
 import com.ccsu.shuziyingxin.pojo.Association;
 import com.ccsu.shuziyingxin.service.IAssociationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +21,27 @@ public class AssociationServiceImpl implements IAssociationService {
     @Autowired
     AssociationDao associationDao;
 
+    @Autowired
+    SearchDao searchDao;
+
     @Override
     public boolean add(Association association) {
         associationDao.insertOne(association);
+        searchDao.addKeyWord(association.getName(),"association");
         return false;
     }
 
     @Override
     public boolean modify(Association association) {
         associationDao.update(association);
+        return false;
+    }
+
+    @Override
+    public boolean delete(int assoId) {
+        Association association = associationDao.queryOne(assoId);
+        associationDao.delete(assoId);
+        searchDao.delete(association.getName());
         return false;
     }
 

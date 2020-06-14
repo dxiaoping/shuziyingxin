@@ -6,4 +6,18 @@
     <select id="queryAll" resultType="com.ccsu.shuziyingxin.pojo.Search">
       select * from search;
     </select>
+
+    <select id="queryKeyName" resultType="string">
+      select key_word from search;
+    </select>
+    <select id="querySearch" resultType="com.ccsu.shuziyingxin.pojo.Search">
+        select * from search where key_word = #{key};
+    </select>
+    <insert id="addKeyWord" parameterType="string">
+        insert into search(key_word,class1)
+        value (#{keyWord},#{class1})
+    </insert>
+    <delete id="delete" parameterType="string">
+        delete from search where key_word = #{keyWord}
+    </delete>
 </mapper>

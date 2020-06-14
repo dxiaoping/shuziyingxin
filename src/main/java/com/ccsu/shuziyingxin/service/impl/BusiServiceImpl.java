@@ -2,6 +2,7 @@ package com.ccsu.shuziyingxin.service.impl;
 
 import com.ccsu.shuziyingxin.dao.BusiClassDao;
 import com.ccsu.shuziyingxin.dao.BusiDao;
+import com.ccsu.shuziyingxin.dao.SearchDao;
 import com.ccsu.shuziyingxin.pojo.BusiClass;
 import com.ccsu.shuziyingxin.pojo.Business;
 import com.ccsu.shuziyingxin.pojo.Address;
@@ -34,8 +35,16 @@ public class BusiServiceImpl implements IBusiService {
     @Autowired
     IAddrService addrService;
 
+    @Autowired
+    SearchDao searchDao;
+
     @Override
     public boolean deleteBusiness(int busiId) {
+//        删除依赖
+        addrService.deleteRelation(busiId);
+        Business business = busiDao.queryBusi(busiId);
+        busiDao.deleteBusiRelation(busiId);
+        searchDao.delete(business.getBusiName());
         return busiDao.deleteBusi(busiId);
     }
 
@@ -53,7 +62,10 @@ public class BusiServiceImpl implements IBusiService {
         if ("modify".equals(busiParam.getOptionType())) {
             busiDao.modifyBusi(business);
         } else {
+            if (business.getBusiClassId()==0)business.setBusiClassId(1);
             busiDao.createBusi(business);
+//          bug:修改业务名时没有删除关键字
+            searchDao.addKeyWord(business.getBusiName(),"business");
         }
         updateRelationBusi(business.getBusiId(), busiParam.getRelationBusi());
         updateRelationAddr(business.getBusiId(), busiParam.getRelationAddr());

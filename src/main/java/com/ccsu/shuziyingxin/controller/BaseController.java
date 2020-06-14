@@ -7,6 +7,7 @@ import com.ccsu.shuziyingxin.pojo.Jxjh;
 import com.ccsu.shuziyingxin.pojo.Search;
 import com.ccsu.shuziyingxin.pojo.Student;
 import com.ccsu.shuziyingxin.service.IBaseService;
+import com.ccsu.shuziyingxin.service.IVoiceService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,9 @@ public class BaseController {
     @Autowired
     IBaseService baseService;
 
+    @Autowired
+    IVoiceService voiceService;
+
     @RequestMapping(value = "queryJxjh")
     @ResponseBody
     public ResultInfo queryJxjh(@RequestParam("speciality") String speciality){
@@ -44,18 +48,19 @@ public class BaseController {
         return ResultInfo.success(ResultMsg.SUCCESS,keyWord);
     }
 
+    @RequestMapping(value = "voice")
+    @ResponseBody
+    public ResultInfo voice(@Param("str") String str,@Param("secondConfirm") boolean secondConfirm){
+
+        List<String> keyList = voiceService.parse(str,secondConfirm);
+
+        return ResultInfo.success(ResultMsg.SUCCESS,keyList);
+    }
+
     @RequestMapping(value = "queryConfig")
     @ResponseBody
     public ResultInfo queryConfig(@Param("class1") String class1){
         List<Config> configs = baseService.getConfigList(class1);
         return ResultInfo.success(ResultMsg.SUCCESS,configs);
     }
-//    @RequestMapping(value = "queryJxjh")
-//    @ResponseBody
-//    public ResultInfo search(@RequestParam(value = "keyWord") String keyWord){
-//
-//
-//
-//        return ResultInfo.success(ResultMsg.SUCCESS);
-//    }
 }

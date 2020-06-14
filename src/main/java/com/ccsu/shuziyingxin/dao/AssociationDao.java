@@ -17,4 +17,5 @@ public interface AssociationDao {
     List<Association> queryByOrganization(String organization);
     int insertOne(Association association);
     int update(Association association);
+    int delete(int assoId);
 }

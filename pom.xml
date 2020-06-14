@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ccsu</groupId>
-    <artifactId>shuziyingxin</artifactId>
+    <artifactId>shuziyingxin_main</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>shuziyingxin</name>
+    <name>shuziyingxin_main</name>
     <description>ying xin applet</description>
 
     <properties>
@@ -86,6 +86,13 @@
             <groupId>com.alibaba.boot</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
             <version>0.2.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.hankcs/hanlp -->
+        <dependency>
+            <groupId>com.hankcs</groupId>
+            <artifactId>hanlp</artifactId>
+            <version>portable-1.7.7</version>
         </dependency>
 
         <dependency>

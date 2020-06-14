@@ -75,7 +75,7 @@ public class ReptileJxjh {
         dcaps.setJavascriptEnabled(true);
         //驱动支持
 //        dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, System.getProperty(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY));
-        dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "D:\\下载\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
+        dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "C:\\phantomjs.exe");
         //不显示驱动器日志
         String[] phantomArgs = new String[]{"--webdriver-loglevel=NONE"};
         dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);

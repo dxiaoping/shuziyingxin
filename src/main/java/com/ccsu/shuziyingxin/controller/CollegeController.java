@@ -40,11 +40,4 @@ public class CollegeController {
         CollegeDetailPage collegeDetailPage = collegeService.getCollegeDetail(collegeId);
         return ResultInfo.success(ResultMsg.SUCCESS,collegeDetailPage);
     }
-
-//    @RequestMapping("speciality")
-//    @ResponseBody
-//    public ResultInfo specialityDetail(@RequestParam("specialityId") int specialityId) {
-//        Speciality speciality = collegeService.getSpecialityDetail(specialityId);
-//        return ResultInfo.success(ResultMsg.SUCCESS,speciality);
-//    }
 }

@@ -1,13 +1,9 @@
 spring:
   profiles:
+#    active: dev-test
     active: dev
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.101.72.84:3306/yingxin?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
-    #    url: jdbc:mysql://127.0.0.1:3306/job_collection?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
-    username: root
-    #    password: dxp971216
-    password: 123456
+#    active: online
+
 server:
   servlet:
     context-path: /
@@ -26,16 +22,48 @@ dubbo:
   protocol: # 暴露服务端口
     name: dubbo # 默认名称,勿更改
     port: 20880 # 暴露服务端口(默认为20880,修改端口,不同的服务提供者端口不能重复)
+#    client: 116.62.9.40
   consumer:
     check: false
+    timeout: 28000
+    retries: 0
+---
+spring:
+  profiles: dev-test
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.101.72.84:3306/yingxin?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    #url: jdbc:mysql://127.0.0.1:3306/job_collection?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    username: root
+    #password: dxp971216
+    password: 123456
+server:
+  port: 1437
+
 ---
 spring:
   profiles: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.101.72.84:3306/yingxin_online?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    #url: jdbc:mysql://127.0.0.1:3306/job_collection?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    username: root
+    #password: dxp971216
+    password: 123456
 server:
   port: 1437
+
 ---
 spring:
   profiles: online
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.101.72.84:3306/yingxin_online?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+#    url: jdbc:mysql://47.101.72.84:3306/yingxin?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    #url: jdbc:mysql://127.0.0.1:3306/job_collection?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    username: root
+    #password: dxp971216
+    password: 123456
 server:
   port: 443
   ssl:

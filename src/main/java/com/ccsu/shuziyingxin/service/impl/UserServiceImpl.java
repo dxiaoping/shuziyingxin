@@ -1,5 +1,6 @@
 package com.ccsu.shuziyingxin.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.ccsu.shuziyingxin.common.Const;
 import com.ccsu.shuziyingxin.common.ResultInfo;
 import com.ccsu.shuziyingxin.common.ResultMsg;
@@ -12,6 +13,7 @@ import com.ccsu.shuziyingxin.pojo.Jxjh;
 import com.ccsu.shuziyingxin.pojo.Speciality;
 import com.ccsu.shuziyingxin.pojo.Student;
 import com.ccsu.shuziyingxin.pojo.request.LoginParam;
+import com.ccsu.shuziyingxin.service.ICodeService;
 import com.ccsu.shuziyingxin.service.ISpecialityService;
 import com.ccsu.shuziyingxin.service.IUserService;
 import com.ccsu.shuziyingxin.util.ReptileJxjh;
@@ -55,47 +57,50 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     ExecutorService pool;
 
+    @Reference
+    ICodeService codeService;
+
     @Override
     @Transactional
     public ResultInfo login(LoginParam loginParam) throws Exception {
         Student student = studentDao.queryByStuNo(loginParam.getAccount());
-        if (student == null) {
-//            从信息门户爬取到信息封装到student
-            if (loginParam.getAccount().equals("B20160304302")) {
-                student = new Student("B20160304302", "261216", "段晓平", "计算机工程与应用数学学院",
-                        "软件工程", "16数管01", "洪山一栋|1143寝室");
-            } else {
-                student = new Student("B20170904112", "181420", "孙金", "经济与管理学院",
-                        "市场营销", "17市营01", "维智公寓|143寝室");
-            }
-        }
+
         ReptileJxjh reptile = new ReptileJxjh();
         Map<String, String> map = login2jwc(loginParam.getAccount(), loginParam.getPassword());
         String state = map.get(Const.LOGIN.STATE);
         if (Const.LOGIN_STATE.SUCCESS.equals(state)) {
             System.out.println("登陆成功");
-            String cookie = map.get(Const.LOGIN.COOKIE);
-            if (jxjhDao.queryJxjhBySpeciality(student.getSpeciality()) == null) {
+            Student studentInfoDoor = codeService.getUserInfo(loginParam.getAccount(), loginParam.getPassword());
+            if (student != null) {
+                studentDao.update(studentInfoDoor);
+                return ResultInfo.success(ResultMsg.LOGIN_SUCCESS, student);
+            } else {
+                studentDao.insert(studentInfoDoor);
+                String cookie = map.get(Const.LOGIN.COOKIE);
+
 //            异步爬取并存储
-                Student finalStudent = student;
-                pool.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        List<List<Jxjh>> jxjhs = null;
-                        try {
-                            jxjhs = reptile.getJxjhFromJwc(cookie);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                Student finalStudent = studentInfoDoor;
+                if (specialityService.querySpeciality(finalStudent.getSpeciality()) == null) {
+
+                    pool.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            List<List<Jxjh>> jxjhs = null;
+                            try {
+                                jxjhs = reptile.getJxjhFromJwc(cookie);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            for (List<Jxjh> jxjh : jxjhs) {
+                                jxjhDao.saveJxjh(jxjh);
+                            }
+                            specialityService.createSpeciality(finalStudent);
                         }
-                        for (List<Jxjh> jxjh : jxjhs) {
-                            jxjhDao.saveJxjh(jxjh);
-                        }
-                        specialityService.createSpeciality(finalStudent);
-                    }
-                });
+                    });
+                }
             }
 //            specialityService.createSpeciality(student);
-            return ResultInfo.success(ResultMsg.LOGIN_SUCCESS, student);
+            return ResultInfo.success(ResultMsg.LOGIN_SUCCESS, studentInfoDoor);
         } else if (Const.LOGIN_STATE.PSD_ERR.equals(state)) {
             System.out.println("账户或密码错误");
             return ResultInfo.success(ResultMsg.LOGIN_PSD_ERR);
@@ -107,11 +112,11 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ResultInfo check(String secret) {
-        Config config = configDao.select("admin_key",secret);
-        if (config ==null){
+        Config config = configDao.select("admin_key", secret);
+        if (config == null) {
             return ResultInfo.success(ResultMsg.CHECK_FAIL);
         }
-        return ResultInfo.success(ResultMsg.CHECK_SUCCESS,config);
+        return ResultInfo.success(ResultMsg.CHECK_SUCCESS, config);
     }
 
     public static Map<String, String> login2jwc(String username, String password) throws Exception {

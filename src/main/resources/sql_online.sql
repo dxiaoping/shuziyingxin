@@ -1,4 +1,3 @@
-create database yingxin_online;
 use yingxin_online;
 create table address
 (
@@ -17,6 +16,24 @@ create table address
   unique (addr_name)
 );
 
+create table association
+(
+  id int auto_increment
+  comment '社团id'
+    primary key,
+  name varchar(20) null
+  comment '社团名称',
+  related_person text null
+  comment '相关人物',
+  contact_info text null
+  comment '联系信息',
+  description text null
+  comment '社团描述',
+  organization varchar(20) null
+  comment '所属组织'
+)
+  comment '社团/协会/学生会组织';
+
 create table busi_class
 (
   busi_class_id int auto_increment
@@ -24,6 +41,8 @@ create table busi_class
     primary key,
   busi_class_name varchar(10) null
   comment '业务类别名称',
+  description text null
+  comment '分类描述',
   constraint busi_class_name
   unique (busi_class_name)
 )
@@ -95,7 +114,9 @@ create table config
   value varchar(45) null
   comment '联系信息',
   description text null
-  comment '社团描述'
+  comment '社团描述',
+  class1 varchar(45) null
+  comment '配置类别'
 )
   comment '配置表';
 
@@ -137,6 +158,78 @@ create table jxjh
   comment '课程类别'
 )
   comment '教学计划';
+
+create table laboratory
+(
+  id int auto_increment
+  comment '实验室id'
+    primary key,
+  name varchar(20) null
+  comment '实验室名称',
+  organization varchar(20) null
+  comment '所属组织',
+  related_person text null
+  comment '相关人物',
+  contact_info text null
+  comment '联系信息',
+  description text null
+  comment '实验室描述',
+  address varchar(45) null
+  comment '实验室详细地址'
+)
+  comment '实验室';
+
+create table search
+(
+  key_word varchar(20) null
+  comment '其他表中的关键字',
+  class1 varchar(20) null
+  comment '业务类型'
+)
+  comment '搜索库';
+
+create table speciality
+(
+  speciality_id int auto_increment
+  comment '专业id'
+    primary key,
+  college_id int null
+  comment '学院id',
+  speciality_name varchar(25) null
+  comment '专业名称',
+  description text null
+  comment '专业描述',
+  major_class varchar(255) null
+  comment '主修课程',
+  constraint speciality_ibfk_1
+  foreign key (college_id) references college (college_id)
+)
+  comment '专业介绍';
+
+create index college_id
+  on speciality (college_id);
+
+create table student
+(
+  openid varchar(155) null
+  comment 'openid',
+  student_no varchar(20) not null
+  comment '学号'
+    primary key,
+  password varchar(20) null
+  comment '密码',
+  student_name varchar(20) null
+  comment '姓名',
+  college varchar(20) null
+  comment '学院',
+  speciality varchar(20) null
+  comment '专业',
+  class1 varchar(20) null
+  comment '班级',
+  dormitory varchar(20) null
+  comment '宿舍'
+)
+  comment '学生信息';
 
 create table wxinfo
 (

@@ -9,5 +9,6 @@ public interface ISpecialityService {
     int createSpeciality(Student student);
     int modifySpeciality(Speciality speciality);
     Speciality querySpeciality(int specialityId);
+    Speciality querySpeciality(String name);
     List<Speciality> querySpecialityList();
 }

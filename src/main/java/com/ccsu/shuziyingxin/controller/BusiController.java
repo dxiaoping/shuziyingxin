@@ -57,15 +57,6 @@ public class BusiController {
         Business business = busiService.queryBusi(busiName);
         return ResultInfo.success(ResultMsg.SUCCESS,business);
     }
-//    @RequestMapping(value = "queryBusi", method = RequestMethod.GET)
-//    @ResponseBody
-//    public ResultInfo queryBusi(
-//            @RequestParam(value = "busiName") String busiName) {
-//
-//        BusinessPage businessPage = busiService.queryBusiness(busiName);
-//        return ResultInfo.success(ResultMsg.SUCCESS, businessPage);
-//
-//    }
 
     @RequestMapping(value = "queryBusiByClass", method = RequestMethod.GET)
     @ResponseBody
@@ -79,5 +70,12 @@ public class BusiController {
     public ResultInfo operationPage(@RequestParam(value = "busiId", required = false) Integer busiId) {
         BusiEditPage busiEditPage = busiService.getOperatPage(busiId);
         return ResultInfo.success(ResultMsg.SUCCESS, busiEditPage);
+    }
+
+    @RequestMapping(value = "delete")
+    @ResponseBody
+    public ResultInfo delete(@RequestParam("busiId") int busiId) {
+        busiService.deleteBusiness(busiId);
+        return ResultInfo.success(ResultMsg.SUCCESS);
     }
 }

@@ -48,6 +48,7 @@ public class SpecialityServiceImpl implements ISpecialityService {
                 .append("|");
             }
 
+
             speciality.setCollegeId(collegeId);
             speciality.setSpecialityName(student.getSpeciality());
             speciality.setDescription("input");
@@ -67,6 +68,12 @@ public class SpecialityServiceImpl implements ISpecialityService {
     @Override
     public Speciality querySpeciality(int specialityId) {
         Speciality speciality = specialityDao.querySpeciality(specialityId);
+        return speciality;
+    }
+
+    @Override
+    public Speciality querySpeciality(String name) {
+        Speciality speciality = specialityDao.querySpecialityByName(name);
         return speciality;
     }
 

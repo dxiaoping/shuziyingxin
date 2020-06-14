@@ -1,11 +1,13 @@
 package com.ccsu.shuziyingxin.pojo;
 
+import java.io.Serializable;
+
 /**
  * @Description
  * @auther DuanXiaoping
  * @create 2020-03-26 10:31
  */
-public class Student {
+public class Student implements Serializable {
     private String studentNo;//学号
     private String password;//密码
     private String studentName;//姓名

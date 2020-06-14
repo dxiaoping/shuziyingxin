@@ -1,6 +1,7 @@
 package com.ccsu.shuziyingxin.service.impl;
 
 import com.ccsu.shuziyingxin.dao.AddrDao;
+import com.ccsu.shuziyingxin.dao.SearchDao;
 import com.ccsu.shuziyingxin.pojo.Address;
 import com.ccsu.shuziyingxin.service.IAddrService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,21 @@ public class AddrServiceImpl implements IAddrService {
     @Autowired
     AddrDao addrDao;
 
+    @Autowired
+    SearchDao searchDao;
+
     @Override
     public int createAddr(Address address) {
         int count = addrDao.createAddr(address);
+        searchDao.addKeyWord(address.getAddrName(), "address");
         return count;
     }
 
     @Override
     public boolean deleteAddr(int addrId) {
+        Address address = addrDao.queryAddr(addrId);
         addrDao.deleteAddr(addrId);
+        searchDao.delete(address.getAddrName());
         return false;
     }
 

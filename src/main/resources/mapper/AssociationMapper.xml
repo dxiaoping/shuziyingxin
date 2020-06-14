@@ -31,4 +31,7 @@
         </set>
         where id = #{id}
     </update>
+    <delete id="delete" parameterType="int">
+        delete from association where id = #{assoId}
+    </delete>
 </mapper>

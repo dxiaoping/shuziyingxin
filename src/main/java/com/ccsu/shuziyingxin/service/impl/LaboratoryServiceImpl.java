@@ -1,6 +1,7 @@
 package com.ccsu.shuziyingxin.service.impl;
 
 import com.ccsu.shuziyingxin.dao.LaboratoryDao;
+import com.ccsu.shuziyingxin.dao.SearchDao;
 import com.ccsu.shuziyingxin.pojo.Laboratory;
 import com.ccsu.shuziyingxin.pojo.request.LaboratoryParam;
 import com.ccsu.shuziyingxin.service.ILaboratoryService;
@@ -21,9 +22,11 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
     @Autowired
     LaboratoryDao laboratoryDao;
 
+    @Autowired
+    SearchDao searchDao;
     @Override
     public List<Laboratory> queryAll(String organization) {
-        List<Laboratory> laboratoryList = new ArrayList<>();
+        List<Laboratory> laboratoryList = null;
         if (organization == null || "".equals(organization) || organization.equals("全部")) {
             laboratoryList = laboratoryDao.queryAll();
         }else {
@@ -47,7 +50,16 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
             laboratoryDao.update(laboratory);
         } else {
             laboratoryDao.insert(laboratory);
+            searchDao.addKeyWord(laboratory.getName(),"laboratory");
         }
         return laboratory;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        Laboratory laboratory = laboratoryDao.queryOne(id);
+        laboratoryDao.delete(id);
+        searchDao.delete(laboratory.getName());
+        return false;
     }
 }

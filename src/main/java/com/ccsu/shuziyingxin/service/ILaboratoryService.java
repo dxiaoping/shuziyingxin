@@ -14,4 +14,5 @@ public interface ILaboratoryService {
     List<Laboratory> queryAll(String organization);
     Laboratory queryOne(int id);
     Laboratory saveLaboratory(LaboratoryParam laboratoryParam);
+    boolean delete(int id);
 }
