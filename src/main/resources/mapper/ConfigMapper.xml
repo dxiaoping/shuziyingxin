@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.shuziyingxin.dao.ConfigDao">
+    <resultMap id="config" type="com.ccsu.shuziyingxin.pojo.Config">
+
+    </resultMap>
+    <select id="select" resultMap="config">
+        select * from config
+        where class1=#{class1}
+        and value=#{value};
+    </select>
+    <select id="selectListByClass" resultMap="config">
+        select * from config
+        where class1=#{class1};
+    </select>
+</mapper>
