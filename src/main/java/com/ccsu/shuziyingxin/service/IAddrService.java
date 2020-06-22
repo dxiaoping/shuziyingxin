@@ -16,6 +16,7 @@ public interface IAddrService {
     boolean addRelation(int busiId,int addrId);
     boolean deleteRelation(int busiId);
     Address queryAddr(int addrId);
+    Address queryAddr(String addrName);
     List<Address> queryAddrListByBusi(int busiId);
     List<Address> queryAllAddr();
 }

@@ -1,6 +1,7 @@
 package com.ccsu.shuziyingxin.service;
 
 import com.ccsu.shuziyingxin.common.ResultInfo;
+import com.ccsu.shuziyingxin.pojo.Search;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ import java.util.List;
  * @create 2020-06-06 16:36
  */
 public interface IVoiceService {
-    List<String> parse(String str,boolean secondConfirm);
+    List<Search> parse(String str, boolean secondConfirm);
 }

@@ -27,7 +27,7 @@ public class AddrController {
     public ResultInfo saveAddress(@RequestBody Address address) {
         if (address.getAddrId() == 0) {
             int count = addrService.createAddr(address);
-        }else {
+        } else {
             addrService.updateAddr(address);
         }
         return ResultInfo.success(ResultMsg.SUCCESS, address);
@@ -35,8 +35,15 @@ public class AddrController {
 
     @RequestMapping(value = "queryOne", method = RequestMethod.GET)
     @ResponseBody
-    public ResultInfo queryOne(@RequestParam("addrId") int addrId) {
-        Address address = addrService.queryAddr(addrId);
+    public ResultInfo queryOne(
+            @RequestParam(value = "addrId", required = false) Integer addrId,
+            @RequestParam(value = "addrName", required = false) String addrName) {
+        Address address = null;
+        if (addrId == null) {
+            address = addrService.queryAddr(addrName);
+        } else {
+            address = addrService.queryAddr(addrId);
+        }
         return ResultInfo.success(ResultMsg.SUCCESS, address);
     }
 

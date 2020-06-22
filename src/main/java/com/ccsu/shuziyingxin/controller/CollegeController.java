@@ -36,8 +36,10 @@ public class CollegeController {
 
     @RequestMapping("detail")
     @ResponseBody
-    public ResultInfo collegeDetail(@RequestParam("collegeId") int collegeId) {
-        CollegeDetailPage collegeDetailPage = collegeService.getCollegeDetail(collegeId);
+    public ResultInfo collegeDetail(
+            @RequestParam(value = "collegeId",required = false) Integer collegeId,
+            @RequestParam(value = "collegeName",required = false) String collegeName) {
+        CollegeDetailPage collegeDetailPage = collegeService.getCollegeDetail(collegeId,collegeName);
         return ResultInfo.success(ResultMsg.SUCCESS,collegeDetailPage);
     }
 }

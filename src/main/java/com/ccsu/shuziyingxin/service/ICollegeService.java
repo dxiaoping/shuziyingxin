@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ICollegeService {
     List<College> getAllCollege();
-    CollegeDetailPage getCollegeDetail(int collegeId);
+    CollegeDetailPage getCollegeDetail(Integer collegeId,String collegeName);
     Speciality getSpecialityDetail(int specialityId);
 }

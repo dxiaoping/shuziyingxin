@@ -32,9 +32,15 @@ public class CollegeServiceImpl implements ICollegeService {
     }
 
     @Override
-    public CollegeDetailPage getCollegeDetail(int collegeId) {
+    public CollegeDetailPage getCollegeDetail(Integer collegeId, String collegeName) {
         CollegeDetailPage collegeDetailPage = new CollegeDetailPage();
-        College college = collegeDao.queryCollege(collegeId);
+        College college = null;
+        if (collegeId == null) {
+            college = collegeDao.queryCollegeByName(collegeName);
+            collegeId = college.getCollegeId();
+        } else {
+            college = collegeDao.queryCollege(collegeId);
+        }
         List<Speciality> specialityList = specialityDao.querySpeciByCollege(collegeId);
         collegeDetailPage.setCollege(college);
         collegeDetailPage.setSpecialityList(specialityList);

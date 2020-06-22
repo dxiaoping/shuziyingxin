@@ -22,23 +22,32 @@ public class SpecialityController {
     @Autowired
     ISpecialityService specialityService;
 
-    @RequestMapping(value = "save",method = RequestMethod.POST,consumes = "application/json")
+    @RequestMapping(value = "save", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public ResultInfo save(@RequestBody Speciality speciality){
+    public ResultInfo save(@RequestBody Speciality speciality) {
         specialityService.modifySpeciality(speciality);
-        return ResultInfo.success(ResultMsg.SUCCESS,"SUCCESS");
+        return ResultInfo.success(ResultMsg.SUCCESS, "SUCCESS");
     }
 
-    @RequestMapping(value = "queryOne",method = RequestMethod.GET)
+    @RequestMapping(value = "queryOne", method = RequestMethod.GET)
     @ResponseBody
-    public ResultInfo queryOne(@RequestParam("specialityId") String specialityId){
-        Speciality speciality = specialityService.querySpeciality(Integer.valueOf(specialityId));
-        return ResultInfo.success(ResultMsg.SUCCESS,speciality);
+    public ResultInfo queryOne(
+            @RequestParam(value = "specialityId",required = false) String specialityId,
+            @RequestParam(value = "specialityName",required = false) String specialityName) {
+        Speciality speciality = null;
+        if (specialityId == null) {
+
+            speciality = specialityService.querySpeciality(specialityName);
+        } else {
+            speciality = specialityService.querySpeciality(Integer.valueOf(specialityId));
+        }
+        return ResultInfo.success(ResultMsg.SUCCESS, speciality);
     }
-    @RequestMapping(value = "queryAll",method = RequestMethod.GET)
+
+    @RequestMapping(value = "queryAll", method = RequestMethod.GET)
     @ResponseBody
-    public ResultInfo queryAll(){
+    public ResultInfo queryAll() {
         List<Speciality> specialityList = specialityService.querySpecialityList();
-        return ResultInfo.success(ResultMsg.SUCCESS,specialityList);
+        return ResultInfo.success(ResultMsg.SUCCESS, specialityList);
     }
 }

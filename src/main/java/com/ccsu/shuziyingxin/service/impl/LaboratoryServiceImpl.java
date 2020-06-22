@@ -43,6 +43,11 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
     }
 
     @Override
+    public Laboratory queryOne(String name) {
+        Laboratory laboratory = laboratoryDao.queryOneByName(name);
+        return laboratory;
+    }
+    @Override
     public Laboratory saveLaboratory(LaboratoryParam laboratoryParam) {
         String type = laboratoryParam.getOptionType();
         Laboratory laboratory = laboratoryParam.getLaboratory();

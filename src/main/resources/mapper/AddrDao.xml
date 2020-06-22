@@ -20,6 +20,9 @@
     <select id="queryAddr" resultType="com.ccsu.shuziyingxin.pojo.Address">
       select * from address where addr_id = #{addrId}
     </select>
+    <select id="queryAddrByName" resultType="com.ccsu.shuziyingxin.pojo.Address">
+      select * from address where addr_name = #{addrName}
+    </select>
     <select id="queryAddrListByBusi" parameterType="int" resultType="com.ccsu.shuziyingxin.pojo.Address">
         select * from address addr
         left join addr_relation ar on addr.addr_id= ar.addr_id

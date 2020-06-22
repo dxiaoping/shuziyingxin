@@ -15,6 +15,7 @@ public interface LaboratoryDao {
     List<Laboratory> queryAll();
     List<Laboratory> queryByOrganization(String organization);
     Laboratory queryOne(int id);
+    Laboratory queryOneByName(String name);
     int update(Laboratory laboratory);
     int insert(Laboratory laboratory);
     boolean delete(int id);

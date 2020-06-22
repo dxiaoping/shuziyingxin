@@ -20,6 +20,9 @@
     <select id="queryOne" resultMap="laboratory">
         select * from laboratory where id=#{id}
     </select>
+    <select id="queryOneByName" resultMap="laboratory">
+        select * from laboratory where name=#{name}
+    </select>
     <update id="update" parameterMap="laboratory">
         update laboratory
         <set>

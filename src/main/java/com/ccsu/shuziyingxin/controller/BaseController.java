@@ -52,9 +52,10 @@ public class BaseController {
     @ResponseBody
     public ResultInfo voice(@Param("str") String str,@Param("secondConfirm") boolean secondConfirm){
 
-        List<String> keyList = voiceService.parse(str,secondConfirm);
-
-        return ResultInfo.success(ResultMsg.SUCCESS,keyList);
+        System.out.println(str);
+        System.out.println(secondConfirm);
+        List<Search> searchList = voiceService.parse(str,secondConfirm);
+        return ResultInfo.success(ResultMsg.SUCCESS,searchList);
     }
 
     @RequestMapping(value = "queryConfig")

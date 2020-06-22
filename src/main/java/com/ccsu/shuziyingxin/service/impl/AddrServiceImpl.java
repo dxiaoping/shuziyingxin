@@ -62,6 +62,11 @@ public class AddrServiceImpl implements IAddrService {
         Address address = addrDao.queryAddr(addrId);
         return address;
     }
+    @Override
+    public Address queryAddr(String addrName) {
+        Address address = addrDao.queryAddrByName(addrName);
+        return address;
+    }
 
     @Override
     public List<Address> queryAddrListByBusi(int busiId) {

@@ -5,6 +5,7 @@ import com.ccsu.shuziyingxin.common.ResultMsg;
 import com.ccsu.shuziyingxin.pojo.Laboratory;
 import com.ccsu.shuziyingxin.pojo.request.LaboratoryParam;
 import com.ccsu.shuziyingxin.service.ILaboratoryService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,15 @@ public class LaboratoryController {
 
     @RequestMapping(value = "queryOne",method = RequestMethod.GET)
     @ResponseBody
-    public ResultInfo queryOne(Integer id) {
-        Laboratory laboratory = laboratoryService.queryOne(id);
+    public ResultInfo queryOne(
+            @RequestParam(value = "id",required = false) Integer id,
+            @RequestParam(value = "laboratoryName",required = false) String laboratoryName) {
+        Laboratory laboratory = null;
+        if (id == null) {
+            laboratory = laboratoryService.queryOne(laboratoryName);
+        } else {
+            laboratory = laboratoryService.queryOne(id);
+        }
         return ResultInfo.success(ResultMsg.SUCCESS,laboratory);
     }
 

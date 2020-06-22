@@ -20,6 +20,9 @@
     <select id="queryCollege" resultType="com.ccsu.shuziyingxin.pojo.College">
         select * from college where college_id = #{collegeId}
     </select>
+    <select id="queryCollegeByName" resultType="com.ccsu.shuziyingxin.pojo.College">
+        select * from college where college_name = #{collegeName}
+    </select>
     <select id="getCollegeIdByName" resultType="java.lang.Integer">
       select college_id from college where college_name = #{collegeName}
     </select>

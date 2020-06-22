@@ -18,6 +18,7 @@ public interface CollegeDao {
     boolean deleteCollege(int collegeId);
     boolean modifyCollege(College college);
     College queryCollege(int collegeId);
+    College queryCollegeByName(String collegeName);
     Integer getCollegeIdByName(String collegeName);
     List<College> queryAllCollege();
 }

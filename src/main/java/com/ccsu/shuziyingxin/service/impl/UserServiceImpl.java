@@ -66,7 +66,12 @@ public class UserServiceImpl implements IUserService {
         Student student = studentDao.queryByStuNo(loginParam.getAccount());
 
         ReptileJxjh reptile = new ReptileJxjh();
-        Map<String, String> map = login2jwc(loginParam.getAccount(), loginParam.getPassword());
+        Map<String, String> map = new HashMap<>();
+        try{
+            map = login2jwc(loginParam.getAccount(), loginParam.getPassword());
+        }catch (Exception e){
+            return ResultInfo.success(ResultMsg.LOGIN_SCHOOL_FAIL);
+        }
         String state = map.get(Const.LOGIN.STATE);
         if (Const.LOGIN_STATE.SUCCESS.equals(state)) {
             System.out.println("登陆成功");

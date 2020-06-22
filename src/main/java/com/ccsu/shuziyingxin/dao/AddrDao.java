@@ -17,6 +17,7 @@ public interface AddrDao {
     boolean deleteAddr(int addrId);
     boolean modifyAddr(Address address);
     Address queryAddr(int addrId);
+    Address queryAddrByName(String addrName);
     List<Address> queryAddrListByBusi(int busiId);
     List<Address> queryAllAddr();
     boolean addRelation(@Param("busiId") int busiId,@Param("addrId") int addrId);

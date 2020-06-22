@@ -13,6 +13,7 @@ import java.util.List;
 public interface ILaboratoryService {
     List<Laboratory> queryAll(String organization);
     Laboratory queryOne(int id);
+    Laboratory queryOne(String id);
     Laboratory saveLaboratory(LaboratoryParam laboratoryParam);
     boolean delete(int id);
 }
